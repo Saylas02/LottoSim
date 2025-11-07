@@ -1,5 +1,6 @@
 import random as r
 import time as t
+import csv
 
 def generate_random_number(low, high) -> int:
     return r.randint(low, high)
@@ -20,6 +21,12 @@ def check_matches(con, mas)-> int:
         if e in mas:
             m += 1
     return m
+
+def append_stats_to_csv(rt:int, ti:int, tps:int, bal:list, mt:list, bon:int = "0") -> None:
+    """Built .CSV-File: RT, TI, TIS, BAL, MT, BON"""
+    with open("data.csv.csv", "a", newline='', encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile, delimiter=';')
+        writer.writerow([rt, ti, tps, bal, mt, bon])
 
 def game_process( bonus:bool, silent:bool ) -> None:
     start_time = t.time()
@@ -72,9 +79,10 @@ def game_process( bonus:bool, silent:bool ) -> None:
 
     tickets_per_sec =  ticket_amount // runtime
 
+    append_stats_to_csv(runtime, ticket_amount, tickets_per_sec, match_count, master_ticket, game_bonus_num)
+
     price = ticket_amount * 1.20
     price = "${:,.2f}".format(price)
-
 
     if not silent:
         print("")
@@ -87,4 +95,7 @@ def game_process( bonus:bool, silent:bool ) -> None:
         print("*****************************************")
 
 if __name__ == "__main__":
-    game_process( bonus = False, silent = True )
+    simulations = 5
+    for s in range(simulations):
+        print(f"Simulation {s+1}/{simulations}")
+        game_process( bonus = True, silent = True )
