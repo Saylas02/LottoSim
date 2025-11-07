@@ -51,7 +51,41 @@ def get_avg_val() -> None:
     print(f"Avg Master 6: {master_6}")
     print(f"Avg Bonus: {bonus}")
 
+def get_minimum_runtime():
+
+    rt_min = rt_max = t_min = t_max = tps_min = tps_max = 0
+
+    for e in data:
+        """find runtime minimum"""
+        if int(e[0]) < int(rt_min) or rt_min == 0:
+            rt_min = int(e[0])
+
+        """find runtime maximum"""
+        if int(e[0]) > int(rt_max):
+            rt_max = int(e[0])
+
+        """find ticket minimum"""
+        if int(e[1]) < int(t_min) or t_min == 0:
+            t_min = int(e[1])
+
+        """find ticket maximum"""
+        if int(e[1]) > int(t_max):
+            t_max = int(e[1])
+
+        """find tickets per second minimum"""
+        if int(e[2]) < int(tps_min) or tps_min == 0:
+            tps_min = int(e[2])
+
+        """find tickets per second maximum"""
+        if int(e[2]) > int(tps_max):
+            tps_max = int(e[2])
+
+    print(f"Runtime (min): {rt_min}, (max){rt_max}")
+    print(f"Tickets (min): {t_min}, (max){t_max}")
+    print(f"Tickets per Second (min): {tps_min}, (max){tps_max}")
+
 
 if __name__ == '__main__':
     data:list = read_csv_data()
-    get_avg_val()
+    #get_avg_val()
+    get_minimum_runtime()
