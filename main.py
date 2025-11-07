@@ -1,5 +1,4 @@
 import random as r
-import threading
 
 def generate_random_numbers(low, high) -> int:
     return r.randint(low, high)
@@ -21,7 +20,7 @@ def check_matches(con, mas)-> int:
             m += 1
     return m
 
-def game_process():
+def game_process( ):
     ticket_amount:int = 0
     match_count = [0, 0, 0, 0, 0, 0]
 
@@ -45,7 +44,7 @@ def game_process():
             #print(f"5 correct: {consumer_ticket} - Master: {master_ticket}")
         elif matches == 6:
             match_count[5] += 1
-            #print(f"6 correct: {consumer_ticket} - Master: {master_ticket}")
+            print(f"6 correct: {consumer_ticket} - Master: {master_ticket}")
             break
 
     price = ticket_amount * 1.20
@@ -61,11 +60,4 @@ def game_process():
     print("*****************************************")
 
 if __name__ == "__main__":
-
     game_process()
-
-    # th_amt = 1000
-    # for i in range(th_amt):
-    #     t = threading.Thread(target=game_process)
-    #     print(f"Game {i} in Thread {t} started.")
-    #     t.start()
