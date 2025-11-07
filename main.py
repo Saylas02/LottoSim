@@ -1,13 +1,13 @@
 import random as r
 
-def generate_random_numbers(low, high) -> int:
+def generate_random_number(low, high) -> int:
     return r.randint(low, high)
 
 def generate_ticket() -> list[int]:
     ticket = [0, 0, 0, 0, 0, 0]
     for i in range(0,6):
         while True:
-            value:int = generate_random_numbers(1,49)
+            value:int = generate_random_number(1,49)
             if int(value) not in ticket:
                 ticket[i] = int(value)
                 break
@@ -20,12 +20,20 @@ def check_matches(con, mas)-> int:
             m += 1
     return m
 
-def game_process( ):
+def game_process( bonus:bool ) -> None:
     ticket_amount:int = 0
+    game_bonus_num:int = 0
     match_count = [0, 0, 0, 0, 0, 0]
 
     master_ticket = generate_ticket()
-    print(master_ticket)
+
+    if bonus:
+        game_bonus_num = generate_random_number(1,6)
+
+    if not bonus:
+        print(f"Master ticket: {master_ticket}")
+    elif bonus:
+        print(f"Master ticket / Bonus Number: {master_ticket}/{game_bonus_num}")
 
     while True:
         ticket_amount += 1
@@ -41,11 +49,19 @@ def game_process( ):
             match_count[3] += 1
         elif matches == 5:
             match_count[4] += 1
-            #print(f"5 correct: {consumer_ticket} - Master: {master_ticket}")
         elif matches == 6:
             match_count[5] += 1
-            print(f"6 correct: {consumer_ticket} - Master: {master_ticket}")
-            break
+            if not bonus:
+                break
+            else:
+                ticket_bonus_num = generate_random_number(1,6)
+                if game_bonus_num == ticket_bonus_num:
+                    print(f"Correct bonus: {ticket_bonus_num}, master: {game_bonus_num}")
+                    break
+                else:
+                    print(f"Wrong bonus: {ticket_bonus_num}, master: {game_bonus_num}")
+
+
 
     price = ticket_amount * 1.20
     price = "${:,.2f}".format(price)
@@ -60,4 +76,4 @@ def game_process( ):
     print("*****************************************")
 
 if __name__ == "__main__":
-    game_process()
+    game_process( bonus = True )
