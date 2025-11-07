@@ -113,9 +113,3 @@ if __name__ == "__main__":
             counter += 1
 
         t.sleep(0.5)
-
-    for pro in range(cores - 1):
-        p = mp.Process(target=game_process, args=(True, False))
-        processes.append(p)
-        p.start()
-        print(f"Process {pro} started")
