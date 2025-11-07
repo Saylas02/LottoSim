@@ -95,6 +95,7 @@ def game_process( bonus:bool, silent:bool ) -> None:
         print(f"Total ticket price (1,20€): {price}")
         print("*****************************************")
 
+
 if __name__ == "__main__":
     """multiprocessing"""
     mp.set_start_method('spawn')

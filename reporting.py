@@ -10,9 +10,8 @@ def read_csv_data():
         content.pop(0)
     return content
 
-def get_avg_val(datasets:list) -> list:
+def get_avg_val() -> None:
     """evaluate average values of each data entity"""
-
     entries: int = len(data)
 
     runtime = round(sum([ast.literal_eval(row[0]) for row in data]) / entries)
@@ -53,7 +52,6 @@ def get_avg_val(datasets:list) -> list:
     print(f"Avg Bonus: {bonus}")
 
 
-
 if __name__ == '__main__':
     data:list = read_csv_data()
-    get_avg_val(data)
+    get_avg_val()
