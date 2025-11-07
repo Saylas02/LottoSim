@@ -1,3 +1,4 @@
+import multiprocessing as mp
 import random as r
 import time as t
 import csv
@@ -95,7 +96,26 @@ def game_process( bonus:bool, silent:bool ) -> None:
         print("*****************************************")
 
 if __name__ == "__main__":
-    simulations = 5
-    for s in range(simulations):
-        print(f"Simulation {s+1}/{simulations}")
-        game_process( bonus = True, silent = True )
+    """multiprocessing"""
+    mp.set_start_method('spawn')
+    cores:int = mp.cpu_count()
+    processes:list = []
+    counter:int = 0
+
+    while True:
+        processes = [p for p in processes if p.is_alive()]
+
+        if len(processes) < cores:
+            p = mp.Process(target=game_process, args=(True, True))
+            p.start()
+            processes.append(p)
+            print(f"Process {counter} started, active: {len(processes)}")
+            counter += 1
+
+        t.sleep(0.5)
+
+    for pro in range(cores - 1):
+        p = mp.Process(target=game_process, args=(True, False))
+        processes.append(p)
+        p.start()
+        print(f"Process {pro} started")
